@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>永嘉.dev</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;background:#fff;color:#1d1d1f;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+.nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:52px;background:rgba(255,255,255,0.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:0.5px solid rgba(0,0,0,0.08)}
+.nav-logo{font-size:18px;font-weight:500;letter-spacing:-0.04em;color:#1d1d1f}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:13px;color:#6e6e73;transition:color .2s}
+.nav-links a:hover{color:#1d1d1f}
+
+.hero{min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#6e6e73;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero-name{font-size:clamp(3rem,8vw,6rem);font-weight:600;letter-spacing:-0.05em;line-height:1.05;color:#1d1d1f;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .4s forwards}
+.hero-name .accent{background:linear-gradient(135deg,#0071e3,#34aadc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.25rem;color:#6e6e73;max-width:480px;line-height:1.6;margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-cta{display:flex;gap:12px;opacity:0;animation:fadeUp .8s .8s forwards}
+.btn-primary{background:#0071e3;color:#fff;border:none;padding:.75rem 1.75rem;border-radius:980px;font-size:15px;font-weight:500;cursor:pointer;transition:background .2s,transform .1s}
+.btn-primary:hover{background:#0077ed}
+.btn-primary:active{transform:scale(0.97)}
+.btn-secondary{background:rgba(0,0,0,0.06);color:#1d1d1f;border:none;padding:.75rem 1.75rem;border-radius:980px;font-size:15px;font-weight:500;cursor:pointer;transition:background .2s,transform .1s}
+.btn-secondary:hover{background:rgba(0,0,0,0.1)}
+.btn-secondary:active{transform:scale(0.97)}
+
+.glow{position:fixed;pointer-events:none;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,113,227,0.07) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .1s,top .1s;z-index:0}
+
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s .7s forwards}
+.tag{font-size:12px;padding:5px 14px;border-radius:980px;background:rgba(0,0,0,0.05);color:#6e6e73;border:0.5px solid rgba(0,0,0,0.1);transition:background .2s,color .2s}
+.tag:hover{background:rgba(0,113,227,0.08);color:#0071e3;border-color:rgba(0,113,227,0.2)}
+
+.section{max-width:860px;margin:0 auto;padding:5rem 2rem}
+.section-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#6e6e73;margin-bottom:.75rem}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;letter-spacing:-.04em;line-height:1.1;margin-bottom:3rem;color:#1d1d1f}
+.section-title .blue{color:#0071e3}
+
+.post-list{display:flex;flex-direction:column;gap:0}
+.post-item{display:grid;grid-template-columns:90px 1fr auto;align-items:center;gap:1.5rem;padding:1.25rem 1rem;border-radius:12px;cursor:pointer;transition:background .2s;border-bottom:0.5px solid rgba(0,0,0,0.07)}
+.post-item:hover{background:rgba(0,0,0,0.03)}
+.post-item:last-child{border-bottom:none}
+.post-date{font-size:12px;color:#aeaeb2;font-family:monospace;white-space:nowrap}
+.post-title{font-size:16px;color:#1d1d1f;line-height:1.4;font-weight:400}
+.post-badge{font-size:11px;padding:3px 10px;border-radius:980px;background:rgba(0,113,227,0.08);color:#0071e3;white-space:nowrap}
+
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.project-card{background:#f5f5f7;border-radius:18px;padding:1.75rem;cursor:pointer;transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden}
+.project-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,113,227,0.06),transparent);opacity:0;transition:opacity .3s}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.1)}
+.project-card:hover::before{opacity:1}
+.project-icon{font-size:26px;color:#0071e3;margin-bottom:1rem}
+.project-name{font-size:17px;font-weight:600;letter-spacing:-.03em;margin-bottom:.5rem}
+.project-desc{font-size:14px;color:#6e6e73;line-height:1.5}
+.project-lang{display:inline-block;margin-top:1rem;font-size:12px;font-family:monospace;color:#aeaeb2}
+
+.about-card{background:#f5f5f7;border-radius:24px;padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.about-avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#0071e3,#34aadc);display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:600;color:#fff;margin-bottom:1.5rem;letter-spacing:-.04em}
+.about-name{font-size:2rem;font-weight:600;letter-spacing:-.04em;margin-bottom:.5rem}
+.about-role{font-size:15px;color:#6e6e73;margin-bottom:1.5rem}
+.about-bio{font-size:15px;line-height:1.7;color:#3d3d3f}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat-card{background:#fff;border-radius:14px;padding:1.25rem;text-align:center}
+.stat-num{font-size:2.2rem;font-weight:600;letter-spacing:-.04em;color:#0071e3}
+.stat-label{font-size:13px;color:#6e6e73;margin-top:4px}
+
+.footer{border-top:0.5px solid rgba(0,0,0,0.08);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+.footer-left{font-size:13px;color:#aeaeb2}
+.social-links{display:flex;gap:20px}
+.social-links a{font-size:20px;color:#aeaeb2;transition:color .2s}
+.social-links a:hover{color:#0071e3}
+
+.divider{border:none;border-top:0.5px solid rgba(0,0,0,0.07)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+.cursor{display:inline-block;width:3px;height:.85em;background:#1d1d1f;vertical-align:middle;margin-left:2px;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+</style>
+</head>
+<body>
+
+<div class="glow" id="glow"></div>
+
+<nav class="nav">
+  <div class="nav-logo">永嘉<span style="color:#0071e3">.</span>dev</div>
+  <ul class="nav-links">
+    <li><a href="#">文章</a></li>
+    <li><a href="#">项目</a></li>
+    <li><a href="#">关于</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">// 永嘉的技术博客</p>
+  <h1 class="hero-name">
+    Hi，我是<span class="accent">永嘉</span><br>
+    <span id="typed"></span><span class="cursor"></span>
+  </h1>
+  <p class="hero-sub">喜欢把复杂的系统拆解成优雅的代码。在这里记录技术思考、工程实践，以及偶尔的折腾笔记。</p>
+  <div class="hero-tags">
+    <span class="tag">TypeScript</span>
+    <span class="tag">Rust</span>
+    <span class="tag">系统设计</span>
+    <span class="tag">开源</span>
+    <span class="tag">Linux</span>
+    <span class="tag">分布式</span>
+  </div>
+  <div class="hero-cta">
+    <button class="btn-primary">阅读文章</button>
+    <button class="btn-secondary">查看项目</button>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section reveal">
+  <p class="section-label">Writing</p>
+  <h2 class="section-title">最新<span class="blue">文章</span></h2>
+  <div class="post-list">
+    <div class="post-item">
+      <span class="post-date">2026-06-18</span>
+      <span class="post-title">深入理解 Rust 生命周期与借用检查器</span>
+      <span class="post-badge">rust</span>
+    </div>
+    <div class="post-item">
+      <span class="post-date">2026-05-30</span>
+      <span class="post-title">从零构建一个 HTTP/2 服务器</span>
+      <span class="post-badge">network</span>
+    </div>
+    <div class="post-item">
+      <span class="post-date">2026-05-12</span>
+      <span class="post-title">PostgreSQL 索引策略：什么时候 B-Tree 不够用</span>
+      <span class="post-badge">database</span>
+    </div>
+    <div class="post-item">
+      <span class="post-date">2026-04-27</span>
+      <span class="post-title">写了三年 TypeScript，我学到了什么</span>
+      <span class="post-badge">typescript</span>
+    </div>
+    <div class="post-item">
+      <span class="post-date">2026-04-09</span>
+      <span class="post-title">分布式系统中的时钟问题</span>
+      <span class="post-badge">distributed</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section reveal">
+  <p class="section-label">Projects</p>
+  <h2 class="section-title">开源<span class="blue">项目</span></h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-icon"><i class="ti ti-terminal-2"></i></div>
+      <div class="project-name">minidb</div>
+      <div class="project-desc">手写的玩具数据库，支持 SQL 解析与 B+ 树存储引擎。</div>
+      <span class="project-lang">rust</span>
+    </div>
+    <div class="project-card">
+      <div class="project-icon"><i class="ti ti-chart-line"></i></div>
+      <div class="project-name">bench-kit</div>
+      <div class="project-desc">轻量级基准测试工具，零依赖，输出结构化 JSON 报告。</div>
+      <span class="project-lang">typescript</span>
+    </div>
+    <div class="project-card">
+      <div class="project-icon"><i class="ti ti-cpu"></i></div>
+      <div class="project-name">riscv-emu</div>
+      <div class="project-desc">RISC-V 指令集模拟器，支持 RV32I 基础指令集完整实现。</div>
+      <span class="project-lang">c</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section reveal">
+  <p class="section-label">About</p>
+  <h2 class="section-title">关于<span class="blue">永嘉</span></h2>
+  <div class="about-card">
+    <div>
+      <div class="about-avatar">永</div>
+      <div class="about-name">永嘉</div>
+      <div class="about-role">全栈工程师 · 开源爱好者</div>
+      <div class="about-bio">热衷于系统底层与工程实践，相信好的代码是一种对抗复杂性的艺术。用写作整理思路，用开源回馈社区。</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">42</div>
+        <div class="stat-label">篇文章</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">12</div>
+        <div class="stat-label">个项目</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">年写作</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">杯咖啡</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-left">© 2026 永嘉 · 用 ❤ 和 ☕ 驱动</span>
+  <div class="social-links">
+    <a href="#" title="GitHub"><i class="ti ti-brand-github"></i></a>
+    <a href="#" title="Twitter"><i class="ti ti-brand-twitter"></i></a>
+    <a href="#" title="RSS"><i class="ti ti-rss"></i></a>
+    <a href="#" title="邮件"><i class="ti ti-mail"></i></a>
+  </div>
+</footer>
+
+<script>
+const glow = document.getElementById('glow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+const phrases = ['全栈工程师', '开源爱好者', '系统架构师', '代码写作者'];
+let pi = 0, ci = 0, deleting = false;
+const el = document.getElementById('typed');
+function type() {
+  const word = phrases[pi];
+  if (!deleting) {
+    el.textContent = word.slice(0, ++ci);
+    if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    el.textContent = word.slice(0, --ci);
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 60 : 100);
+}
+setTimeout(type, 1200);
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
